@@ -6,7 +6,7 @@ Built on **Shopify Dawn 16.0.0** and converted from the supplied static HTML pro
 
 ## Live Implementation
 
-- Shopify development store: to be added before submission
+- Shopify development store: https://troopod-purelane-8ltvm0ak.myshopify.com
 - GitHub: https://github.com/abhayjavaregowda/troopod-purelane
 
 ## Implemented Sections
@@ -132,11 +132,11 @@ This allows merchants to add, remove, reorder and configure sections without edi
 
 ## AI Usage
 
-I used ChatGPT and Codex to accelerate implementation, troubleshoot Liquid/CSS issues, debug responsive behavior and iterate on visual fidelity.
+I used ChatGPT and Codex as development assistants for targeted implementation, debugging, and responsive refinement.
 
-I reviewed the generated changes, configured the Shopify products and Theme Editor data, tested the storefront across breakpoints, debugged integration issues and made the final implementation decisions.
+I reviewed and integrated the resulting changes, configured the Shopify store and Theme Editor, validated the storefront across breakpoints, and made the final implementation and product decisions.
 
-AI-assisted product mockups were also used for presentation in the development store.
+AI was also used to prepare product mockups for the development-store presentation.
 
 ## Validation
 
