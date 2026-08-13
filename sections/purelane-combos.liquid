@@ -32,6 +32,10 @@
             assign combo_count = block.settings.count_label | downcase
             assign visible_slots = 3
 
+            if combo_count contains '5 product' or combo_title contains 'complete home'
+              assign visible_slots = 5
+            endif
+
             if combo_count contains '2 product' or combo_title contains 'hard water'
               assign visible_slots = 2
             endif
@@ -39,9 +43,13 @@
             assign combo_product_1 = blank
             assign combo_product_2 = blank
             assign combo_product_3 = blank
+            assign combo_product_4 = blank
+            assign combo_product_5 = blank
             assign combo_label_1 = block.settings.item_label_1
             assign combo_label_2 = block.settings.item_label_2
             assign combo_label_3 = block.settings.item_label_3
+            assign combo_label_4 = block.settings.item_label_4
+            assign combo_label_5 = block.settings.item_label_5
 
             if block.settings.product_1 != blank
               assign combo_product_1 = block.settings.product_1
@@ -68,6 +76,12 @@
               elsif combo_product_3 == blank and visible_slots > 2
                 assign combo_product_3 = block.settings.product_3
                 assign combo_label_3 = block.settings.item_label_3
+              elsif combo_product_4 == blank and visible_slots > 3
+                assign combo_product_4 = block.settings.product_3
+                assign combo_label_4 = block.settings.item_label_3
+              elsif combo_product_5 == blank and visible_slots > 4
+                assign combo_product_5 = block.settings.product_3
+                assign combo_label_5 = block.settings.item_label_3
               endif
             endif
 
@@ -81,6 +95,12 @@
               elsif combo_product_3 == blank and visible_slots > 2
                 assign combo_product_3 = block.settings.product_4
                 assign combo_label_3 = block.settings.item_label_4
+              elsif combo_product_4 == blank and visible_slots > 3
+                assign combo_product_4 = block.settings.product_4
+                assign combo_label_4 = block.settings.item_label_4
+              elsif combo_product_5 == blank and visible_slots > 4
+                assign combo_product_5 = block.settings.product_4
+                assign combo_label_5 = block.settings.item_label_4
               endif
             endif
 
@@ -94,6 +114,12 @@
               elsif combo_product_3 == blank and visible_slots > 2
                 assign combo_product_3 = block.settings.product_5
                 assign combo_label_3 = block.settings.item_label_5
+              elsif combo_product_4 == blank and visible_slots > 3
+                assign combo_product_4 = block.settings.product_5
+                assign combo_label_4 = block.settings.item_label_5
+              elsif combo_product_5 == blank and visible_slots > 4
+                assign combo_product_5 = block.settings.product_5
+                assign combo_label_5 = block.settings.item_label_5
               endif
             endif
 
@@ -114,6 +140,14 @@
                     assign combo_already_selected = true
                   endif
 
+                  if combo_product_4 != blank and fallback_product.id == combo_product_4.id
+                    assign combo_already_selected = true
+                  endif
+
+                  if combo_product_5 != blank and fallback_product.id == combo_product_5.id
+                    assign combo_already_selected = true
+                  endif
+
                   unless combo_already_selected
                     if combo_product_1 == blank
                       assign combo_product_1 = fallback_product
@@ -121,6 +155,10 @@
                       assign combo_product_2 = fallback_product
                     elsif combo_product_3 == blank and visible_slots > 2
                       assign combo_product_3 = fallback_product
+                    elsif combo_product_4 == blank and visible_slots > 3
+                      assign combo_product_4 = fallback_product
+                    elsif combo_product_5 == blank and visible_slots > 4
+                      assign combo_product_5 = fallback_product
                     endif
                   endunless
                 endif
@@ -130,6 +168,10 @@
                 endif
 
                 if visible_slots == 3 and combo_product_1 != blank and combo_product_2 != blank and combo_product_3 != blank
+                  break
+                endif
+
+                if visible_slots == 5 and combo_product_1 != blank and combo_product_2 != blank and combo_product_3 != blank and combo_product_4 != blank and combo_product_5 != blank
                   break
                 endif
               endfor
@@ -144,7 +186,7 @@
                 <span class="purelane-combo-card__flag">{{ block.settings.flag | escape }}</span>
               {%- endif -%}
 
-              <div class="purelane-combo-card__stack">
+              <div class="purelane-combo-card__stack purelane-combo-card__stack--{{ visible_slots }}">
                 {%- if combo_product_1 != blank or combo_label_1 != blank -%}
                   <span class="purelane-combo-card__item">
                     <span class="purelane-combo-card__image">
@@ -191,6 +233,42 @@
                       </span>
                       <span class="purelane-combo-card__item-label">
                         {{ combo_label_3 | default: combo_product_3.title | escape }}
+                      </span>
+                    </span>
+                  {%- endif -%}
+                {%- endif -%}
+
+                {%- if visible_slots > 3 -%}
+                  {%- if combo_product_4 != blank or combo_label_4 != blank -%}
+                    <span class="purelane-combo-card__plus" aria-hidden="true">+</span>
+                    <span class="purelane-combo-card__item">
+                      <span class="purelane-combo-card__image">
+                        {%- if combo_product_4.featured_image -%}
+                          <img src="{{ combo_product_4.featured_image | image_url: width: 220 }}" alt="{{ combo_product_4.featured_image.alt | default: combo_product_4.title | escape }}" width="{{ combo_product_4.featured_image.width }}" height="{{ combo_product_4.featured_image.height }}" loading="lazy">
+                        {%- else -%}
+                          <span class="purelane-mini-placeholder" role="img" aria-label="{{ 'Product placeholder' | escape }}"></span>
+                        {%- endif -%}
+                      </span>
+                      <span class="purelane-combo-card__item-label">
+                        {{ combo_label_4 | default: combo_product_4.title | escape }}
+                      </span>
+                    </span>
+                  {%- endif -%}
+                {%- endif -%}
+
+                {%- if visible_slots > 4 -%}
+                  {%- if combo_product_5 != blank or combo_label_5 != blank -%}
+                    <span class="purelane-combo-card__plus" aria-hidden="true">+</span>
+                    <span class="purelane-combo-card__item">
+                      <span class="purelane-combo-card__image">
+                        {%- if combo_product_5.featured_image -%}
+                          <img src="{{ combo_product_5.featured_image | image_url: width: 220 }}" alt="{{ combo_product_5.featured_image.alt | default: combo_product_5.title | escape }}" width="{{ combo_product_5.featured_image.width }}" height="{{ combo_product_5.featured_image.height }}" loading="lazy">
+                        {%- else -%}
+                          <span class="purelane-mini-placeholder" role="img" aria-label="{{ 'Product placeholder' | escape }}"></span>
+                        {%- endif -%}
+                      </span>
+                      <span class="purelane-combo-card__item-label">
+                        {{ combo_label_5 | default: combo_product_5.title | escape }}
                       </span>
                     </span>
                   {%- endif -%}

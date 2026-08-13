@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "purelane_hero": {
@@ -39,10 +48,10 @@
         "primary_link": "#shop",
         "secondary_label": "Build bundle",
         "secondary_link": "#bundles",
-        "product_1": "",
-        "product_2": "",
-        "product_3": "",
-        "fallback_collection": "all",
+        "product_1": "tap-cleaner-limescale-remover",
+        "product_2": "kitchen-cleaner-foaming",
+        "product_3": "copper-bronze-brass-cleaner",
+        "fallback_collection": "purelane-essentials",
         "slide_1_label": "Single bottle",
         "slide_2_label": "Two-product set",
         "slide_3_label": "Three-product set",
@@ -121,17 +130,17 @@
     "purelane_combos": {
       "type": "purelane-combos",
       "blocks": {
-        "combo_1": {
+        "combo_8TkTKK": {
           "type": "combo",
           "settings": {
             "featured": false,
             "savings_text": "You save Rs. 398",
-            "flag": "Most popular",
-            "product_1": "",
+            "flag": "",
+            "product_1": "kitchen-cleaner-foaming",
             "item_label_1": "Cuts grease instantly",
-            "product_2": "",
+            "product_2": "organic-dishwash-liquid-gel",
             "item_label_2": "Squeaky clean dishes",
-            "product_3": "",
+            "product_3": "tap-cleaner-limescale-remover",
             "item_label_3": "Melts hard water stains",
             "product_4": "",
             "item_label_4": "",
@@ -139,13 +148,13 @@
             "item_label_5": "",
             "title": "Kitchen essentials",
             "count_label": "3 products",
-            "description": "Includes your selected kitchen products. Everything for a sparkling kitchen, without picking separately.",
+            "description": "Includes your selected products. Everything for a focused cleaning routine, without picking separately.",
             "price_text": "Rs. 499",
             "compare_text": "Rs. 897",
             "price_badge": "Save Rs. 398",
             "fine_print": "Inclusive of all taxes. COD available",
             "cta_label": "Shop bundle",
-            "cta_link": "#bundles",
+            "cta_link": "",
             "button_style": "ghost"
           }
         },
@@ -155,12 +164,12 @@
             "featured": false,
             "savings_text": "You save Rs. 448",
             "flag": "",
-            "product_1": "",
-            "item_label_1": "Removes tough stains",
-            "product_2": "",
-            "item_label_2": "Softens every wash",
-            "product_3": "",
-            "item_label_3": "Deep-cleans your machine",
+            "product_1": "natural-laundry-detergent",
+            "item_label_1": "Removes tough stains and odour",
+            "product_2": "washing-machine-cleaner-descaler",
+            "item_label_2": "Deep-cleans your machine",
+            "product_3": "gentle-hydrating-liquid-handwash-for-dry-sensitive-hands-with-plant-based-cleansing-ingredients",
+            "item_label_3": "Gentle on hands",
             "product_4": "",
             "item_label_4": "",
             "product_5": "",
@@ -183,12 +192,12 @@
             "featured": true,
             "savings_text": "Biggest saving",
             "flag": "Best value",
-            "product_1": "",
+            "product_1": "kitchen-cleaner-foaming",
             "item_label_1": "Cuts grease instantly",
-            "product_2": "",
-            "item_label_2": "Floors stay fresh",
-            "product_3": "",
-            "item_label_3": "Gentle on hands",
+            "product_2": "organic-dishwash-liquid-gel",
+            "item_label_2": "Squeaky clean dishes",
+            "product_3": "gentle-hydrating-liquid-handwash-for-dry-sensitive-hands-with-plant-based-cleansing-ingredients",
+            "item_label_3": "Gentle hydration for hands",
             "product_4": "",
             "item_label_4": "",
             "product_5": "",
@@ -211,12 +220,12 @@
             "featured": false,
             "savings_text": "You save Rs. 398",
             "flag": "",
-            "product_1": "",
-            "item_label_1": "Deep clean",
-            "product_2": "",
-            "item_label_2": "Melts hard water stains",
-            "product_3": "",
-            "item_label_3": "Scrubs away soap scum",
+            "product_1": "tap-cleaner-limescale-remover",
+            "item_label_1": "Melts hard water stains",
+            "product_2": "copper-bronze-brass-cleaner",
+            "item_label_2": "Restores metal shine",
+            "product_3": "gentle-hydrating-liquid-handwash-for-dry-sensitive-hands-with-plant-based-cleansing-ingredients",
+            "item_label_3": "Gentle on hands",
             "product_4": "",
             "item_label_4": "",
             "product_5": "",
@@ -239,10 +248,10 @@
             "featured": false,
             "savings_text": "You save Rs. 249",
             "flag": "",
-            "product_1": "",
+            "product_1": "tap-cleaner-limescale-remover",
             "item_label_1": "Melts hard water stains",
-            "product_2": "",
-            "item_label_2": "Fights limescale",
+            "product_2": "washing-machine-cleaner-descaler",
+            "item_label_2": "Removes limescale buildup",
             "product_3": "",
             "item_label_3": "",
             "product_4": "",
@@ -263,7 +272,7 @@
         }
       },
       "block_order": [
-        "combo_1",
+        "combo_8TkTKK",
         "combo_2",
         "combo_3",
         "combo_4",
@@ -274,7 +283,7 @@
         "heading": "Best selling combos",
         "description": "Swipe through the boxes people order most. Each one is already priced to make stocking up simpler.",
         "rail_label": "Best selling combos",
-        "fallback_collection": "all",
+        "fallback_collection": "purelane-essentials",
         "swipe_cue": "Swipe for more combos",
         "note": ""
       }
@@ -296,8 +305,8 @@
             "cta_label": "Build this box",
             "cta_link": "#shop",
             "button_style": "ghost",
-            "product_1": "",
-            "product_2": "",
+            "product_1": "tap-cleaner-limescale-remover",
+            "product_2": "kitchen-cleaner-foaming",
             "product_3": "",
             "product_4": "",
             "product_5": ""
@@ -317,9 +326,9 @@
             "cta_label": "Build this box",
             "cta_link": "#shop",
             "button_style": "primary",
-            "product_1": "",
-            "product_2": "",
-            "product_3": "",
+            "product_1": "tap-cleaner-limescale-remover",
+            "product_2": "kitchen-cleaner-foaming",
+            "product_3": "organic-dishwash-liquid-gel",
             "product_4": "",
             "product_5": ""
           }
@@ -338,11 +347,11 @@
             "cta_label": "Build this box",
             "cta_link": "#shop",
             "button_style": "ghost",
-            "product_1": "",
-            "product_2": "",
-            "product_3": "",
-            "product_4": "",
-            "product_5": ""
+            "product_1": "tap-cleaner-limescale-remover",
+            "product_2": "kitchen-cleaner-foaming",
+            "product_3": "copper-bronze-brass-cleaner",
+            "product_4": "washing-machine-cleaner-descaler",
+            "product_5": "gentle-hydrating-liquid-handwash-for-dry-sensitive-hands-with-plant-based-cleansing-ingredients"
           }
         }
       },
@@ -355,13 +364,13 @@
         "kicker": "Build your bundle",
         "heading": "One box. Every room.",
         "description": "Mix and match across kitchen, laundry, home and hands. One flat offer, free shipping, and no code needed.",
-        "fallback_collection": "all"
+        "fallback_collection": "purelane-essentials"
       }
     },
     "purelane_product_grid": {
       "type": "purelane-product-grid",
       "settings": {
-        "collection": "all",
+        "collection": "purelane-essentials",
         "products_to_show": 8,
         "kicker": "Bestsellers",
         "heading": "Loved by 30,000 homes",
