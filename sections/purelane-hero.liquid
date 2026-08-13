@@ -1,0 +1,474 @@
+{{ 'purelane.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'purelane.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign product_1 = section.settings.product_1
+  assign product_2 = section.settings.product_2
+  assign product_3 = section.settings.product_3
+  assign fallback_collection = section.settings.fallback_collection
+
+  if fallback_collection != blank
+    for fallback_product in fallback_collection.products
+      if fallback_product.available
+        assign already_selected = false
+
+        if product_1 != blank and fallback_product.id == product_1.id
+          assign already_selected = true
+        endif
+
+        if product_2 != blank and fallback_product.id == product_2.id
+          assign already_selected = true
+        endif
+
+        if product_3 != blank and fallback_product.id == product_3.id
+          assign already_selected = true
+        endif
+
+        unless already_selected
+          if product_1 == blank
+            assign product_1 = fallback_product
+          elsif product_2 == blank
+            assign product_2 = fallback_product
+          elsif product_3 == blank
+            assign product_3 = fallback_product
+          endif
+        endunless
+      endif
+
+      if product_1 != blank and product_2 != blank and product_3 != blank
+        break
+      endif
+    endfor
+  endif
+
+  assign variant_1 = product_1.selected_or_first_available_variant
+  assign variant_2 = product_2.selected_or_first_available_variant
+  assign variant_3 = product_3.selected_or_first_available_variant
+
+  assign price_1 = variant_1.price | default: 0
+  assign price_2 = variant_2.price | default: 0
+  assign price_3 = variant_3.price | default: 0
+
+  assign compare_1 = price_1
+  if variant_1.compare_at_price > price_1
+    assign compare_1 = variant_1.compare_at_price
+  endif
+
+  assign compare_2 = price_2
+  if variant_2.compare_at_price > price_2
+    assign compare_2 = variant_2.compare_at_price
+  endif
+
+  assign compare_3 = price_3
+  if variant_3.compare_at_price > price_3
+    assign compare_3 = variant_3.compare_at_price
+  endif
+
+  assign slide_2_price = price_2 | plus: price_1
+  assign slide_2_compare = compare_2 | plus: compare_1
+  assign slide_3_price = price_2 | plus: price_3 | plus: price_1
+  assign slide_3_compare = compare_2 | plus: compare_3 | plus: compare_1
+-%}
+
+<section class="purelane-section purelane-hero" data-purelane-hero>
+  <div class="purelane-bubbles" aria-hidden="true">
+    <span style="--x:8%;--s:10px;--dur:17s;--delay:-3s;--drift:18px"></span>
+    <span style="--x:18%;--s:6px;--dur:14s;--delay:-8s;--drift:-20px"></span>
+    <span style="--x:31%;--s:12px;--dur:21s;--delay:-12s;--drift:28px"></span>
+    <span style="--x:48%;--s:7px;--dur:16s;--delay:-5s;--drift:-16px"></span>
+    <span style="--x:62%;--s:11px;--dur:19s;--delay:-10s;--drift:24px"></span>
+    <span style="--x:79%;--s:8px;--dur:15s;--delay:-2s;--drift:-22px"></span>
+    <span style="--x:91%;--s:13px;--dur:23s;--delay:-14s;--drift:18px"></span>
+  </div>
+
+  <div class="purelane-wrap purelane-hero__grid">
+    {%- if section.blocks.size > 0 -%}
+      <div class="purelane-glass-soft purelane-hero__badges" aria-label="{{ section.settings.badges_label | escape }}">
+        {%- for block in section.blocks -%}
+          <div class="purelane-hero__badge" {{ block.shopify_attributes }}>
+            <span class="purelane-hero__badge-icon">
+              {%- case block.settings.icon -%}
+                {%- when 'shield' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v6.2c0 4.3 3.1 7.6 7.5 8.8 4.4-1.2 7.5-4.5 7.5-8.8V6L12 3Z"/><path d="m9 12 2.2 2.2L15.4 10"/></svg>
+                {%- when 'no' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M6.4 17.6 17.6 6.4"/></svg>
+                {%- when 'heart' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-9.4A4.1 4.1 0 0 1 12 8a4.1 4.1 0 0 1 7 2.6c0 5-7 9.4-7 9.4Z"/></svg>
+                {%- else -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg>
+              {%- endcase -%}
+            </span>
+            <span class="purelane-hero__badge-text">{{ block.settings.label | escape | newline_to_br }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="purelane-hero__copy">
+      <h1 class="purelane-display purelane-rv is-visible">
+        {{ section.settings.heading_line_1 | escape }}<br>
+        {{ section.settings.heading_line_2 | escape }}<br>
+        <span class="purelane-accent">{{ section.settings.heading_accent | escape }}</span>
+      </h1>
+
+      <div class="purelane-rule purelane-rv purelane-rv-d1">
+        <i></i>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg>
+        <i></i>
+      </div>
+
+      {%- if section.settings.description != blank -%}
+        <p class="purelane-lede purelane-rv purelane-rv-d2">{{ section.settings.description | escape }}</p>
+      {%- endif -%}
+
+      <div class="purelane-hero__ctas purelane-rv purelane-rv-d3">
+        {%- if section.settings.primary_label != blank -%}
+          <a
+            class="purelane-btn purelane-btn--primary"
+            {% if section.settings.primary_link == blank %}
+              role="link" aria-disabled="true"
+            {% else %}
+              href="{{ section.settings.primary_link }}"
+            {% endif %}
+          >
+            {{ section.settings.primary_label | escape }}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13m-5-6 6 6-6 6"/></svg>
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.secondary_label != blank -%}
+          <a
+            class="purelane-btn"
+            {% if section.settings.secondary_link == blank %}
+              role="link" aria-disabled="true"
+            {% else %}
+              href="{{ section.settings.secondary_link }}"
+            {% endif %}
+          >
+            {{ section.settings.secondary_label | escape }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="purelane-hero__mobile-badges purelane-rv purelane-rv-d4" aria-label="{{ section.settings.badges_label | escape }}">
+          {%- for block in section.blocks limit: 3 -%}
+            <div class="purelane-glass-soft purelane-hero__badge">
+              <span class="purelane-hero__badge-icon">
+                {%- case block.settings.icon -%}
+                  {%- when 'shield' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v6.2c0 4.3 3.1 7.6 7.5 8.8 4.4-1.2 7.5-4.5 7.5-8.8V6L12 3Z"/><path d="m9 12 2.2 2.2L15.4 10"/></svg>
+                  {%- when 'no' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M6.4 17.6 17.6 6.4"/></svg>
+                  {%- when 'heart' -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-9.4A4.1 4.1 0 0 1 12 8a4.1 4.1 0 0 1 7 2.6c0 5-7 9.4-7 9.4Z"/></svg>
+                  {%- else -%}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg>
+                {%- endcase -%}
+              </span>
+              <span class="purelane-hero__badge-text">{{ block.settings.label | escape }}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="purelane-hero__stage-wrap purelane-rv purelane-rv-d2">
+      <div class="purelane-hero__stage">
+        <div class="purelane-hero__slide purelane-hero__slide--one is-active" aria-hidden="false">
+          <span class="purelane-hero__item purelane-hero__item-a purelane-hero__item--delay-1">
+            {%- if product_1.featured_image -%}
+              <img
+                class="purelane-product-visual"
+                src="{{ product_1.featured_image | image_url: width: 760 }}"
+                alt="{{ product_1.featured_image.alt | default: product_1.title | escape }}"
+                width="{{ product_1.featured_image.width }}"
+                height="{{ product_1.featured_image.height }}"
+                loading="eager"
+              >
+            {%- else -%}
+              <span class="purelane-product-visual purelane-product-visual--placeholder" role="img" aria-label="{{ 'Product selection placeholder' | escape }}"></span>
+            {%- endif -%}
+          </span>
+          <div class="purelane-glass-soft purelane-hero__price">
+            <span class="purelane-hero__price-label">{{ section.settings.slide_1_label | escape }}</span>
+            {%- if price_1 > 0 -%}
+              <span class="purelane-hero__price-value">
+                <strong>{{ price_1 | money }}</strong>
+                {%- if compare_1 > price_1 -%}<s>{{ compare_1 | money }}</s>{%- endif -%}
+              </span>
+              {%- if compare_1 > price_1 -%}
+                {%- assign saving_1 = compare_1 | minus: price_1 -%}
+                <span class="purelane-hero__price-note">Save {{ saving_1 | money }}</span>
+              {%- endif -%}
+            {%- else -%}
+              <span class="purelane-hero__price-value"><strong>{{ section.settings.empty_price_text | escape }}</strong></span>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="purelane-hero__slide purelane-hero__slide--two" aria-hidden="true">
+          <span class="purelane-hero__item purelane-hero__item-a purelane-hero__item--delay-1">
+            {%- if product_2.featured_image -%}
+              <img class="purelane-product-visual" src="{{ product_2.featured_image | image_url: width: 620 }}" alt="{{ product_2.featured_image.alt | default: product_2.title | escape }}" width="{{ product_2.featured_image.width }}" height="{{ product_2.featured_image.height }}" loading="lazy">
+            {%- else -%}
+              <span class="purelane-product-visual purelane-product-visual--placeholder" role="img" aria-label="{{ 'Product selection placeholder' | escape }}"></span>
+            {%- endif -%}
+          </span>
+          <span class="purelane-hero__item purelane-hero__item-b purelane-hero__item--delay-2">
+            {%- if product_1.featured_image -%}
+              <img class="purelane-product-visual" src="{{ product_1.featured_image | image_url: width: 760 }}" alt="{{ product_1.featured_image.alt | default: product_1.title | escape }}" width="{{ product_1.featured_image.width }}" height="{{ product_1.featured_image.height }}" loading="lazy">
+            {%- else -%}
+              <span class="purelane-product-visual purelane-product-visual--placeholder" role="img" aria-label="{{ 'Product selection placeholder' | escape }}"></span>
+            {%- endif -%}
+          </span>
+          <div class="purelane-glass-soft purelane-hero__price">
+            <span class="purelane-hero__price-label">{{ section.settings.slide_2_label | escape }}</span>
+            {%- if slide_2_price > 0 -%}
+              <span class="purelane-hero__price-value">
+                <strong>{{ slide_2_price | money }}</strong>
+                {%- if slide_2_compare > slide_2_price -%}<s>{{ slide_2_compare | money }}</s>{%- endif -%}
+              </span>
+              {%- if slide_2_compare > slide_2_price -%}
+                {%- assign saving_2 = slide_2_compare | minus: slide_2_price -%}
+                <span class="purelane-hero__price-note">Save {{ saving_2 | money }}</span>
+              {%- endif -%}
+            {%- else -%}
+              <span class="purelane-hero__price-value"><strong>{{ section.settings.empty_price_text | escape }}</strong></span>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="purelane-hero__slide purelane-hero__slide--three" aria-hidden="true">
+          <span class="purelane-hero__item purelane-hero__item-a purelane-hero__item--delay-1">
+            {%- if product_2.featured_image -%}
+              <img class="purelane-product-visual" src="{{ product_2.featured_image | image_url: width: 620 }}" alt="{{ product_2.featured_image.alt | default: product_2.title | escape }}" width="{{ product_2.featured_image.width }}" height="{{ product_2.featured_image.height }}" loading="lazy">
+            {%- else -%}
+              <span class="purelane-product-visual purelane-product-visual--placeholder" role="img" aria-label="{{ 'Product selection placeholder' | escape }}"></span>
+            {%- endif -%}
+          </span>
+          <span class="purelane-hero__item purelane-hero__item-b purelane-hero__item--delay-3">
+            {%- if product_3.featured_image -%}
+              <img class="purelane-product-visual" src="{{ product_3.featured_image | image_url: width: 620 }}" alt="{{ product_3.featured_image.alt | default: product_3.title | escape }}" width="{{ product_3.featured_image.width }}" height="{{ product_3.featured_image.height }}" loading="lazy">
+            {%- else -%}
+              <span class="purelane-product-visual purelane-product-visual--placeholder" role="img" aria-label="{{ 'Product selection placeholder' | escape }}"></span>
+            {%- endif -%}
+          </span>
+          <span class="purelane-hero__item purelane-hero__item-c purelane-hero__item--delay-2">
+            {%- if product_1.featured_image -%}
+              <img class="purelane-product-visual" src="{{ product_1.featured_image | image_url: width: 760 }}" alt="{{ product_1.featured_image.alt | default: product_1.title | escape }}" width="{{ product_1.featured_image.width }}" height="{{ product_1.featured_image.height }}" loading="lazy">
+            {%- else -%}
+              <span class="purelane-product-visual purelane-product-visual--placeholder" role="img" aria-label="{{ 'Product selection placeholder' | escape }}"></span>
+            {%- endif -%}
+          </span>
+          <div class="purelane-glass-soft purelane-hero__price">
+            <span class="purelane-hero__price-label">{{ section.settings.slide_3_label | escape }}</span>
+            {%- if slide_3_price > 0 -%}
+              <span class="purelane-hero__price-value">
+                <strong>{{ slide_3_price | money }}</strong>
+                {%- if slide_3_compare > slide_3_price -%}<s>{{ slide_3_compare | money }}</s>{%- endif -%}
+              </span>
+              {%- if slide_3_compare > slide_3_price -%}
+                {%- assign saving_3 = slide_3_compare | minus: slide_3_price -%}
+                <span class="purelane-hero__price-note">Save {{ saving_3 | money }}</span>
+              {%- endif -%}
+            {%- else -%}
+              <span class="purelane-hero__price-value"><strong>{{ section.settings.empty_price_text | escape }}</strong></span>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+
+      <div class="purelane-hero__dots" aria-label="{{ 'Product presentation slides' | escape }}">
+        <button type="button" class="purelane-hero__dot is-active" aria-label="{{ 'Show 1 product' | escape }}" aria-pressed="true"></button>
+        <button type="button" class="purelane-hero__dot" aria-label="{{ 'Show 2 products' | escape }}" aria-pressed="false"></button>
+        <button type="button" class="purelane-hero__dot" aria-label="{{ 'Show 3 products' | escape }}" aria-pressed="false"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane hero",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Copy"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading line 1",
+      "default": "Clean"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading line 2",
+      "default": "That"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Accent heading line",
+      "default": "Lasts"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Homecare that works on the toughest grime, made from plants. Kind to your home, your family and the world outside it."
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Primary CTA label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "primary_link",
+      "label": "Primary CTA link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary CTA label",
+      "default": "How it works"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary CTA link"
+    },
+    {
+      "type": "header",
+      "content": "Products"
+    },
+    {
+      "type": "product",
+      "id": "product_1",
+      "label": "Main product"
+    },
+    {
+      "type": "product",
+      "id": "product_2",
+      "label": "Second product"
+    },
+    {
+      "type": "product",
+      "id": "product_3",
+      "label": "Third product"
+    },
+    {
+      "type": "collection",
+      "id": "fallback_collection",
+      "label": "Fallback collection",
+      "info": "Used to fill empty hero product slots with the first available products."
+    },
+    {
+      "type": "text",
+      "id": "slide_1_label",
+      "label": "Slide 1 label",
+      "default": "Single bottle"
+    },
+    {
+      "type": "text",
+      "id": "slide_2_label",
+      "label": "Slide 2 label",
+      "default": "Two-product set"
+    },
+    {
+      "type": "text",
+      "id": "slide_3_label",
+      "label": "Slide 3 label",
+      "default": "Three-product set"
+    },
+    {
+      "type": "text",
+      "id": "empty_price_text",
+      "label": "Price text before products are selected",
+      "default": "Choose products"
+    },
+    {
+      "type": "text",
+      "id": "badges_label",
+      "label": "Trust badges accessibility label",
+      "default": "Product promises"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_badge",
+      "name": "Trust badge",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "no",
+              "label": "No symbol"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            }
+          ],
+          "default": "leaf"
+        },
+        {
+          "type": "textarea",
+          "id": "label",
+          "label": "Label",
+          "default": "Plant powered"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane hero",
+      "blocks": [
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "leaf",
+            "label": "Plant powered"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "shield",
+            "label": "Safe for kids & pets"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "no",
+            "label": "Zero harsh chemicals"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
